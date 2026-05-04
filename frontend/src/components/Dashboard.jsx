@@ -51,42 +51,43 @@ const Dashboard = () => {
     .reduce((acc, curr) => acc + curr.amount, 0);
 
   return (
-    <div className="app-container animate-slide-up">
-      
-      {/* 🚀 Top Navigation Bar */}
-      <div className="header-nav">
-        <div>
-          <h1 className="header" style={{ marginBottom: 0 }}>💰 Smart<span>Finance</span></h1>
-          {userRole === "admin" && <span className="admin-badge">👑 Admin Mode</span>}
+    <div className="app-container dashboard-shell animate-slide-up">
+      <div className="dashboard-header">
+        <div className="header-copy">
+          <p className="eyebrow">Expense Tracker</p>
+          <h1 className="dashboard-title">Spend log</h1>
+          <p className="dashboard-subtitle">A small dashboard for keeping track of daily spending without much ceremony.</p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div className="header-actions">
           <div className="user-profile">
             <div className="avatar">{userName.charAt(0).toUpperCase()}</div>
             <span>{userName}</span>
           </div>
-          <button onClick={handleLogout} className="btn-logout">🚪 Logout</button>
+          {userRole === "admin" && <span className="admin-badge">Admin view</span>}
+          <button onClick={handleLogout} className="btn-logout">Log out</button>
         </div>
       </div>
 
       {userRole === "user" ? (
         <>
-          {/* 📊 KPI Summary Cards */}
           <div className="kpi-container">
             <div className="kpi-card">
-              <h4>💸 Total Spent</h4>
+              <h4>Total spent</h4>
               <h2>₹{totalExpense.toLocaleString()}</h2>
+              <div className="kpi-note">All recorded expenses</div>
             </div>
             <div className="kpi-card">
-              <h4>📅 This Month</h4>
+              <h4>This month</h4>
               <h2>₹{monthlyExpense.toLocaleString()}</h2>
+              <div className="kpi-note">Current calendar month</div>
             </div>
             <div className="kpi-card">
-              <h4>📊 Transactions</h4>
+              <h4>Entries</h4>
               <h2>{expenses.length}</h2>
+              <div className="kpi-note">Logged transactions</div>
             </div>
           </div>
 
-          {/* 📝 Form aur Pie Chart ka section */}
           <div className="top-section">
             <ExpenseForm 
               fetchExpenses={() => setUpdateTrigger(!updateTrigger)} 
@@ -96,10 +97,10 @@ const Dashboard = () => {
             <ExpenseChart updateTrigger={updateTrigger} totalExpense={totalExpense} />
           </div>
 
-          {/* 📈 Monthly Trend Bar Chart */}
-          <MonthlyChart updateTrigger={updateTrigger} />
+          <div className="stacked-section">
+            <MonthlyChart updateTrigger={updateTrigger} />
+          </div>
 
-          {/* 📜 Expense List */}
           <ExpenseList 
             expenses={expenses} 
             fetchExpenses={() => setUpdateTrigger(!updateTrigger)} 
@@ -108,20 +109,10 @@ const Dashboard = () => {
           />
         </>
       ) : (
-        /* 👑 Admin Global Panel */
         <div className="admin-panel animate-slide-up">
           <div className="card">
-            <h3 style={{ 
-              background: "linear-gradient(135deg, #10B981, #8B5CF6)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text"
-            }}>
-              👑 Global Dashboard
-            </h3>
-            <p style={{ color: "var(--text-muted)", marginBottom: "20px", fontSize: "0.95rem" }}>
-              Viewing all transactions across the platform
-            </p>
+            <h3>All transactions</h3>
+            <p className="section-note">View every record across the app from one simple table.</p>
             <ExpenseList expenses={allUsersExpenses} isAdminView={true} />
           </div>
         </div>

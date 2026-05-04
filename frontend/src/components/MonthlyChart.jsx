@@ -24,28 +24,14 @@ const MonthlyChart = ({ updateTrigger }) => {
           labels: data.map((item) => monthNames[item._id - 1]),
           datasets: [
             {
-              label: "Amount Spent (₹)",
+              label: "Amount spent (₹)",
               data: data.map((item) => item.total),
-              // Premium gradient: Emerald to Purple
-              backgroundColor: [
-                "#10B981",
-                "#059669",
-                "#8B5CF6",
-                "#7C3AED",
-                "#F59E0B",
-                "#FBBF24",
-                "#EC4899",
-                "#F43F5E",
-                "#06B6D4",
-                "#0891B2",
-                "#10B981",
-                "#059669"
-              ],
+              backgroundColor: "rgba(101, 122, 102, 0.8)",
               borderRadius: 8,
               borderSkipped: false,
-              barThickness: 32,
-              categoryPercentage: 0.8,
-              borderColor: 'rgba(255, 255, 255, 0.1)',
+              barThickness: 26,
+              categoryPercentage: 0.76,
+              borderColor: 'rgba(101, 122, 102, 0.9)',
               borderWidth: 1,
             },
           ],
@@ -64,11 +50,11 @@ const MonthlyChart = ({ updateTrigger }) => {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: "rgba(31, 41, 55, 0.95)",
+        backgroundColor: "rgba(31, 31, 28, 0.95)",
         padding: 14,
-        titleFont: { size: 14, family: "'Inter', sans-serif", weight: '700' },
-        bodyFont: { size: 13, family: "'Inter', sans-serif", weight: '600' },
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        titleFont: { size: 14, family: "system-ui, sans-serif", weight: '700' },
+        bodyFont: { size: 13, family: "system-ui, sans-serif", weight: '600' },
+        borderColor: 'rgba(255, 255, 255, 0.12)',
         borderWidth: 1,
         displayColors: false,
         callbacks: {
@@ -80,14 +66,14 @@ const MonthlyChart = ({ updateTrigger }) => {
       y: {
         beginAtZero: true,
         grid: { 
-          color: "#F3F4F6",
+          color: "#e7e1d6",
           drawBorder: false,
           lineWidth: 0.5
         },
         border: { display: false },
         ticks: {
-          font: { size: 12, family: "'Inter', sans-serif", weight: '500' },
-          color: '#6B7280',
+          font: { size: 12, family: "system-ui, sans-serif", weight: '500' },
+          color: '#61615b',
           callback: (value) => '₹' + value.toLocaleString()
         }
       },
@@ -95,8 +81,8 @@ const MonthlyChart = ({ updateTrigger }) => {
         grid: { display: false },
         border: { display: false },
         ticks: {
-          font: { size: 12, family: "'Inter', sans-serif", weight: '600' },
-          color: '#6B7280'
+          font: { size: 12, family: "system-ui, sans-serif", weight: '600' },
+          color: '#61615b'
         }
       }
     }
@@ -104,13 +90,13 @@ const MonthlyChart = ({ updateTrigger }) => {
 
   return (
     <div className="card animate-slide-up" style={{ marginBottom: "30px" }}>
-      <h3>📈 Monthly Spending Trends</h3>
+      <h3>Monthly spending trend</h3>
       <div style={{ height: "320px", width: "100%" }}>
         {chartData ? (
           <Bar data={chartData} options={options} />
         ) : (
-          <p style={{ color: "#6B7280", textAlign: "center", marginTop: "120px", fontSize: "0.95rem" }}>
-            💡 Track spending across months
+          <p className="empty-state">
+            Track spending across months.
           </p>
         )}
       </div>

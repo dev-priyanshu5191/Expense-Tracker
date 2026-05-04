@@ -18,16 +18,13 @@ const ExpenseChart = ({ updateTrigger, totalExpense }) => {
           return;
         }
 
-        // Premium gradient-ready colors without blue
         const colors = [
-          "#10B981", // Emerald Green
-          "#8B5CF6", // Purple
-          "#F59E0B", // Amber
-          "#EF4444", // Red
-          "#EC4899", // Pink
-          "#06B6D4", // Cyan
-          "#F97316", // Orange
-          "#6366F1", // Indigo (non-blue)
+          "#657a66",
+          "#8a7a62",
+          "#787d87",
+          "#a08d70",
+          "#6f7c74",
+          "#93856f",
         ];
 
         const formattedData = {
@@ -48,48 +45,45 @@ const ExpenseChart = ({ updateTrigger, totalExpense }) => {
   }, [updateTrigger]);
 
   const options = {
-    layout: {
-      padding: 10
-    },
     plugins: {
       legend: { 
         position: 'bottom', 
         labels: { 
           usePointStyle: true, 
           padding: 16,
-          font: { family: "'Inter', sans-serif", size: 12, weight: '600' },
-          color: '#6B7280'
+          font: { family: "system-ui, sans-serif", size: 12, weight: '600' },
+          color: '#61615b'
         } 
       },
       tooltip: {
-        backgroundColor: 'rgba(31, 41, 55, 0.9)',
+        backgroundColor: 'rgba(31, 31, 28, 0.94)',
         padding: 12,
-        titleFont: { size: 13, family: "'Inter', sans-serif", weight: '700' },
-        bodyFont: { size: 12, family: "'Inter', sans-serif" },
-        borderColor: 'rgba(255, 255, 255, 0.2)',
+        titleFont: { size: 13, family: "system-ui, sans-serif", weight: '700' },
+        bodyFont: { size: 12, family: "system-ui, sans-serif" },
+        borderColor: 'rgba(255, 255, 255, 0.12)',
         borderWidth: 1
       }
     },
-    cutout: '72%',
+    cutout: '70%',
     maintainAspectRatio: false
   };
 
   return (
     <div className="card chart-container">
-      <h3>📊 Spending by Category</h3>
+      <h3>Spending by category</h3>
       
       <div className="chart-wrapper">
         {chartData ? (
           <>
             <Doughnut data={chartData} options={options} />
             <div className="chart-center-text">
-              <span>Total Spent</span>
+              <span>Total spent</span>
               <h4>₹{totalExpense ? totalExpense.toLocaleString() : 0}</h4>
             </div>
           </>
         ) : (
-          <p style={{ color: "#6B7280", textAlign: "center", marginTop: "100px", fontSize: "0.95rem" }}>
-            💡 Add expenses to see analysis
+          <p className="empty-state">
+            Add expenses to see the category breakdown.
           </p>
         )}
       </div>

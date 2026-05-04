@@ -28,48 +28,38 @@ const Auth = () => {
   };
 
   return (
-    <div className="app-container" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
-      <div className="card animate-slide-up" style={{ width: "100%", maxWidth: "420px" }}>
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <h2 style={{ 
-            fontSize: "2rem", 
-            fontWeight: "800", 
-            background: "linear-gradient(135deg, #10B981 0%, #8B5CF6 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            marginBottom: "8px"
-          }}>
-            💰 Smart Finance
-          </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", fontWeight: "500" }}>
-            {isLogin ? "Welcome back to your financial hub" : "Start managing your finances"}
+    <div className="app-container auth-shell">
+      <div className="card auth-card animate-slide-up">
+        <div style={{ textAlign: "left", marginBottom: "22px" }}>
+          <p className="eyebrow">Expense Tracker</p>
+          <h2 className="auth-title">Simple expense tracking</h2>
+          <p className="auth-subtitle" style={{ marginTop: "8px" }}>
+            {isLogin ? "Sign in to review your spending and update entries." : "Create a small account and start logging expenses."}
           </p>
         </div>
-        
+
         {errorMsg && (
-          <div style={{ 
-            background: "linear-gradient(135deg, #FEE2E2, #FECACA)", 
-            color: "#DC2626", 
-            padding: "14px 16px", 
-            borderRadius: "12px", 
-            marginBottom: "20px", 
-            textAlign: "center", 
-            fontSize: "0.9rem",
-            fontWeight: "600",
-            border: "1px solid rgba(220, 38, 38, 0.2)"
+          <div style={{
+            background: "rgba(141, 79, 69, 0.08)",
+            color: "#7f4038",
+            padding: "12px 14px",
+            borderRadius: "10px",
+            marginBottom: "16px",
+            fontSize: "0.92rem",
+            border: "1px solid rgba(141, 79, 69, 0.18)"
           }}>
-            ⚠️ {errorMsg}
+            {errorMsg}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="input-group">
-              <label>👤 Full Name</label>
+              <label htmlFor="name">Full name</label>
               <input 
                 type="text" 
                 name="name" 
+                id="name"
                 placeholder="John Doe"
                 onChange={handleChange} 
                 required 
@@ -77,48 +67,41 @@ const Auth = () => {
             </div>
           )}
           <div className="input-group">
-            <label>📧 Email</label>
+            <label htmlFor="email">Email</label>
             <input 
               type="email" 
               name="email" 
+                id="email"
               placeholder="you@example.com"
               onChange={handleChange} 
               required 
             />
           </div>
           <div className="input-group">
-            <label>🔐 Password</label>
+            <label htmlFor="password">Password</label>
             <input 
               type="password" 
               name="password" 
+                id="password"
               placeholder="••••••••"
               onChange={handleChange} 
               required 
             />
           </div>
-          <button type="submit" className="btn-primary" style={{ marginTop: "24px", width: "100%" }}>
-            {isLogin ? "🚀 Login" : "✨ Create Account"}
+          <button type="submit" className="btn-primary" style={{ marginTop: "10px", width: "100%" }}>
+            {isLogin ? "Sign in" : "Create account"}
           </button>
         </form>
 
-        <div style={{ textAlign: "center", marginTop: "24px", paddingTop: "24px", borderTop: "1px solid var(--border-light)" }}>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", marginBottom: "0" }}>
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <span 
-              style={{ 
-                color: "var(--primary-color)", 
-                cursor: "pointer", 
-                fontWeight: "700",
-                transition: "all 0.2s ease",
-                padding: "0 4px"
-              }} 
-              onClick={() => { setIsLogin(!isLogin); setErrorMsg(""); }}
-              onMouseEnter={(e) => e.target.style.opacity = "0.8"}
-              onMouseLeave={(e) => e.target.style.opacity = "1"}
-            >
-              {isLogin ? "Sign up here" : "Login here"}
-            </span>
-          </p>
+        <div className="auth-meta">
+          <span>{isLogin ? "New here?" : "Already have an account?"}</span>
+          <button
+            type="button"
+            className="auth-toggle"
+            onClick={() => { setIsLogin(!isLogin); setErrorMsg(""); }}
+          >
+            {isLogin ? "Create one" : "Go to sign in"}
+          </button>
         </div>
       </div>
     </div>

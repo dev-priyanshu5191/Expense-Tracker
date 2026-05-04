@@ -3,18 +3,10 @@ import API from "../api/api";
 
 const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView }) => {
   const handleDelete = async (id) => {
-    if(window.confirm("🗑️ Delete this expense permanently?")) {
+    if (window.confirm("Delete this expense permanently?")) {
       await API.delete(`/expenses/${id}`);
       fetchExpenses();
     }
-  };
-
-  const categoryIcons = {
-    Food: "🍔",
-    Travel: "✈️",
-    Shopping: "🛍️",
-    Bills: "📄",
-    Other: "📦"
   };
 
   const getCategoryBadgeClass = (category) => {
@@ -23,17 +15,18 @@ const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView })
 
   return (
     <div className="card animate-slide-up" style={{ marginTop: isAdminView ? '0' : '20px' }}>
-      <h3>{isAdminView ? "📂 All Users Database" : "📜 My Transactions"}</h3>
-      <div style={{ overflowX: "auto" }}>
+      <h3>{isAdminView ? "All users" : "My transactions"}</h3>
+      <p className="section-note">Simple table view with the latest entries first.</p>
+      <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>📅 Date</th>
-              {isAdminView && <th>👤 User</th>}
-              <th>📂 Category</th>
-              <th>📝 Details</th>
-              <th>💰 Amount</th>
-              {!isAdminView && <th>⚙️ Action</th>}
+              <th>Date</th>
+              {isAdminView && <th>User</th>}
+              <th>Category</th>
+              <th>Details</th>
+              <th>Amount</th>
+              {!isAdminView && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -48,15 +41,15 @@ const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView })
                     })}
                   </td>
                   {isAdminView && (
-                    <td style={{fontWeight: "600", color: "var(--primary-color)"}}>{exp.user?.name || "Unknown"}</td>
+                    <td style={{fontWeight: "600", color: "var(--accent-strong)"}}>{exp.user?.name || "Unknown"}</td>
                   )}
                   <td>
                     <span className={getCategoryBadgeClass(exp.category)}>
-                      {categoryIcons[exp.category] || "📦"} {exp.category}
+                      {exp.category}
                     </span>
                   </td>
-                  <td style={{color: "var(--text-secondary)"}}>{exp.description || "—"}</td>
-                  <td style={{ fontWeight: 700, color: "var(--primary-color)", fontSize: "1rem" }}>₹{exp.amount.toLocaleString()}</td>
+                  <td style={{color: "var(--text-soft)"}}>{exp.description || "—"}</td>
+                  <td style={{ fontWeight: 700, color: "var(--accent-strong)", fontSize: "1rem" }}>₹{exp.amount.toLocaleString()}</td>
                   {!isAdminView && (
                     <td>
                       <button 
@@ -64,7 +57,7 @@ const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView })
                         onClick={() => setExpenseToEdit(exp)}
                         title="Edit expense"
                       >
-                        ✏️ Edit
+                        Edit
                       </button>
                       <button 
                         className="delete-btn" 
@@ -72,7 +65,7 @@ const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView })
                         onClick={() => handleDelete(exp._id)}
                         title="Delete expense"
                       >
-                        🗑️
+                        Delete
                       </button>
                     </td>
                   )}
@@ -81,7 +74,7 @@ const ExpenseList = ({ expenses, fetchExpenses, setExpenseToEdit, isAdminView })
             ) : (
               <tr>
                 <td colSpan={isAdminView ? 5 : 6} style={{ textAlign: "center", padding: "40px 16px", color: "#6B7280" }}>
-                  💡 No expenses yet. Start tracking your spending!
+                  No expenses yet. Start tracking your spending.
                 </td>
               </tr>
             )}
